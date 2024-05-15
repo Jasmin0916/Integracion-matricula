@@ -7,11 +7,12 @@ const uri = 'mongodb+srv://Integracion:integracion123@cluster0.mppyz97.mongodb.n
 mongoose.connect(uri);
 const app = express();
 app.use(express.json());
-const port = 8080;
+const port = 8081;
 
 app.get('/', (req, res) => { 
     res.send("I am alive Course"); 
 });
+
 // Endpoint para crear un nuevo curso
 app.post('/courses', async (req, res) => {
     try {
@@ -23,7 +24,7 @@ app.post('/courses', async (req, res) => {
             return res.status(400).json({ message: 'El código del curso ya existe' });
         }
 
-        // Crear un nuevo curso
+        // Crear un nuevo curso con el código proporcionado
         const newCourse = new courseModel({ code, name, credits, teacher });
         await newCourse.save();
 

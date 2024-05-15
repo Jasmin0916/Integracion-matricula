@@ -8,12 +8,13 @@ const uri = 'mongodb+srv://Integracion:integracion123@cluster0.mppyz97.mongodb.n
 mongoose.connect(uri);
 const app = express();
 app.use(express.json());
-const port = 8082;
+const port = 8081;
 
+// Endpoint para obtener todos los docentes
 app.get('/teachers', async(req, res)=>{
     const list = await teacherModel.find({});
     res.json( list );
-  });
+});
 
 // Endpoint para ingresar un nuevo docente al sistema
 app.post('/teachers', async (req, res) => {
@@ -22,7 +23,7 @@ app.post('/teachers', async (req, res) => {
         await newTeacher.save();
         res.status(201).json(newTeacher);
     } catch (error) {
-        console.log('Error', error);
+        console.error('Error', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
@@ -36,7 +37,7 @@ app.get('/teachers/:code', async (req, res) => {
         }
         res.json(teacher);
     } catch (error) {
-        console.log('Error', error);
+        console.error('Error', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
@@ -48,10 +49,10 @@ app.get('/teachers/:code/courses', async (req, res) => {
         if (!teacher) {
             return res.status(404).json({ message: 'Docente no encontrado' });
         }
-        const courses = await teacherCourseServices.getTeacherCourses(teacher._id);
+        const courses = await teacherCourseServices.getTeacherCourses(teacher.code);
         res.json(courses);
     } catch (error) {
-        console.log('Error', error);
+        console.error('Error', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
@@ -67,7 +68,7 @@ app.put('/teachers/:code/courses/:courseCode/grades', async (req, res) => {
         const result = await teacherCourseServices.assignGrade(req.params.courseCode, studentId, grade);
         res.json(result);
     } catch (error) {
-        console.log('Error', error);
+        console.error('Error', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
@@ -75,3 +76,5 @@ app.put('/teachers/:code/courses/:courseCode/grades', async (req, res) => {
 app.listen(port, () => {
     console.log(`Servicio de Docentes escuchando en el puerto ${port}`);
 });
+
+module.exports = app;

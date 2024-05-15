@@ -22,14 +22,15 @@ const studentCourseServices = {
         }
     },
 
-    getStudentCourses: async function (studentId) {
+    getStudentCourses: async function (studentCode) {
         try {
-            const response = await axios.get(`http://localhost:8080/students/${studentId}/courses`);
+            const response = await axios.get(`http://localhost:8080/students/${studentCode}/courses`);
             return response.data;
         } catch (error) {
-            console.error(`Error al obtener los cursos del estudiante ${studentId}:`, error);
+            console.error(`Error al obtener los cursos del estudiante ${studentCode}:`, error);
             throw error;
         }
     }
 };
-module.exports = {studentCourseServices };
+
+module.exports = { studentCourseServices };

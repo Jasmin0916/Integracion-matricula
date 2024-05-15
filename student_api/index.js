@@ -43,7 +43,7 @@ app.get('/students/:code/courses', async (req, res) => {
         if (!student) {
             return res.status(404).json({ message: 'Estudiante no encontrado' });
         }
-        const courses = await studentCourseServices.getStudentCourses(student._id);
+        const courses = await studentCourseServices.getStudentCourses(student.code);
         res.json(courses);
     } catch (error) {
         console.log('Error', error);
@@ -59,7 +59,7 @@ app.post('/students/:code/enroll', async (req, res) => {
             return res.status(404).json({ message: 'Estudiante no encontrado' });
         }
         const { courseCode } = req.body;
-        const result = await studentCourseServices.enrollStudent(courseCode, student._id);
+        const result = await studentCourseServices.enrollStudent(courseCode, student.code);
         res.json(result);
     } catch (error) {
         console.log('Error', error);

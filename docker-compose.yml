@@ -1,45 +1,32 @@
 services:
-  company_api:
+  course_api:
     build:
-      context: ./company_api
+      context: ./course_api
       dockerfile: Dockerfile
     #image: nodejs
-    container_name: company_api
+    container_name: course_api
     restart: unless-stopped
     ports:
-      - "80:8080"
+      - "80:8081"
   
-  loan_api:
+  student_api:
     build:
-      context: ./loan_api
+      context: ./student_api
       dockerfile: Dockerfile
     #image: nodejs
-    container_name: loan_api
+    container_name: student_api
     restart: unless-stopped
     ports:
-      - "82:8080"
-    depends_on:
-      - person_api
+      - "82:8081"
 
 
-  person_api:
+
+  teacher_api:
     build:
-      context: ./person_api
+      context: ./teacher_api
       dockerfile: Dockerfile
     #image: nodejs
-    container_name: person_api
+    container_name: teacher_api
     restart: unless-stopped
     ports:
-      - "81:8080"
-      
-
-  payment_api:
-    build:
-      context: ./payment_api
-      dockerfile: Dockerfile
-    #image: nodejs
-    container_name: payment_api
-    restart: unless-stopped
-    ports:
-      - "83:8080"
-    
+      - "81:8081"
