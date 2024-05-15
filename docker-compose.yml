@@ -1,0 +1,45 @@
+services:
+  company_api:
+    build:
+      context: ./company_api
+      dockerfile: Dockerfile
+    #image: nodejs
+    container_name: company_api
+    restart: unless-stopped
+    ports:
+      - "80:8080"
+  
+  loan_api:
+    build:
+      context: ./loan_api
+      dockerfile: Dockerfile
+    #image: nodejs
+    container_name: loan_api
+    restart: unless-stopped
+    ports:
+      - "82:8080"
+    depends_on:
+      - person_api
+
+
+  person_api:
+    build:
+      context: ./person_api
+      dockerfile: Dockerfile
+    #image: nodejs
+    container_name: person_api
+    restart: unless-stopped
+    ports:
+      - "81:8080"
+      
+
+  payment_api:
+    build:
+      context: ./payment_api
+      dockerfile: Dockerfile
+    #image: nodejs
+    container_name: payment_api
+    restart: unless-stopped
+    ports:
+      - "83:8080"
+    
